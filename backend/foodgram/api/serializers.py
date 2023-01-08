@@ -5,7 +5,7 @@ from drf_extra_fields.fields import Base64ImageField
 from django.shortcuts import get_object_or_404
 from django.db.models import F
 
-from .models import Recipe, Tag, RecipeIngridient, RecipeTag, Ingridient
+from .models import Recipe, Tag, RecipeIngridient, Ingridient
 
 from users.serializers import UserSerializer
 
@@ -38,17 +38,15 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
         for ingridient in ingridients:
             ingridient_obj = get_object_or_404(
                 Ingridient,
-                pk=ingridient.get('id')
+                pk=ingridient['id']
             )
-            count = ingridient.get('amount')
+            count = ingridient['amount']
             RecipeIngridient.objects.get_or_create(
                 ingridient=ingridient_obj,
                 amount=count,
                 recipe=recipe
             )
-        for tag in tags:
-            tag_obj = get_object_or_404(Tag, pk=tag)
-            RecipeTag.objects.get_or_create(tag=tag_obj, recipe=recipe)
+        recipe.tags.set(tags)
         return recipe
 
 
@@ -102,7 +100,7 @@ class RecipeReadSerializer(serializers.ModelSerializer):
             'id',
             'name',
             'measurement_unit',
-            amount=F('recipeingridient__amount')
+            amount=F('ingridient__amount')
         )
         return ingridients
 

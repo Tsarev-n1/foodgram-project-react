@@ -35,7 +35,6 @@ from .mixins import ViewOnlyMixin
 
 class RecipeViewCreate(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
-    serializer_class = RecipeWriteSerializer
     permission_classes = [IsAuthorOrReadOnly | IsAdminUser]
     pagination_class = CustomPaginatoion
     filter_backends = (DjangoFilterBackend,)

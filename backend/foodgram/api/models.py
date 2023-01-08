@@ -1,7 +1,8 @@
 from django.db import models
-from users.models import User
 from django.core.validators import MinValueValidator, RegexValidator
 from django.db.models import UniqueConstraint
+
+from users.models import User
 
 
 def get_user_media_path(instance, filename):
@@ -35,6 +36,7 @@ class Recipe(models.Model):
     class Meta:
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
+        ordering = ['-id']
 
     def __str__(self):
         return self.title
@@ -82,17 +84,20 @@ class RecipeIngridient(models.Model):
     )
     amount = models.PositiveSmallIntegerField(
         'Количество',
+        default=1,
         validators=[MinValueValidator(1, message='Минимальное количество 1!')],
     )
     ingridient = models.ForeignKey(
         Ingridient,
         on_delete=models.CASCADE,
-        verbose_name='Ингридиент'
+        verbose_name='Ингридиент',
+        related_name='ingridient'
     )
 
     class Meta:
         verbose_name = 'Ингридиент в рецепте'
         verbose_name_plural = 'Ингридиенты в рецептах'
+        ordering = ['-id']
 
     def __str__(self):
         return (
