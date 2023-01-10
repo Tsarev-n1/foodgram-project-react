@@ -1,17 +1,15 @@
 from datetime import datetime
 
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.permissions import (
     IsAdminUser,
     IsAuthenticated,
     SAFE_METHODS
 )
 from rest_framework.decorators import action
-from rest_framework import status
 from rest_framework.response import Response
 
 from django_filters.rest_framework import DjangoFilterBackend
-from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 
@@ -100,8 +98,10 @@ class RecipeViewCreate(viewsets.ModelViewSet):
             recipe__shopping_cart__user=request.user
         ).values(
             'ingridient__name',
-            'ingridient__measurement_unit'
-        ).annotate(amount=Sum('amount'))
+            'ingridient__measurement_unit',
+            'amount'
+        )
+        print(ingridients)
 
         today = datetime.today()
         shopping_list = (

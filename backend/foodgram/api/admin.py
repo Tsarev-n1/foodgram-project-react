@@ -8,7 +8,7 @@ from .models import (
 
 
 class RecipeIngridientInline(admin.TabularInline):
-    model = Recipe.ingredients.through
+    model = Recipe.ingridients.through
     extra = 1
 
 

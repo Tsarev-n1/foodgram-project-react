@@ -28,7 +28,7 @@ class Recipe(models.Model):
         through='RecipeIngridient'
     )
     tags = models.ManyToManyField('Tag', through='RecipeTag')
-    cooking_time = models.FloatField(
+    cooking_time = models.PositiveSmallIntegerField(
         'Время приготовления',
         validators=[MinValueValidator(1)]
     )
@@ -73,6 +73,14 @@ class RecipeTag(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
 
+    class Meta:
+        constraints = (
+            models.UniqueConstraint(
+                fields=('recipe', 'tag'),
+                name='unique_recipetag'
+            ),
+        )
+
 
 class RecipeIngridient(models.Model):
 
@@ -98,6 +106,12 @@ class RecipeIngridient(models.Model):
         verbose_name = 'Ингридиент в рецепте'
         verbose_name_plural = 'Ингридиенты в рецептах'
         ordering = ['-id']
+        constraints = (
+            models.UniqueConstraint(
+                fields=('recipe', 'ingridient'),
+                name='unique_recipeingridient'
+            ),
+        )
 
     def __str__(self):
         return (
