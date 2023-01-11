@@ -1,12 +1,9 @@
 from rest_framework import serializers, status
 from rest_framework.exceptions import ValidationError
-
 from djoser.serializers import UserSerializer, UserCreateSerializer
-
 from django.contrib.auth import get_user_model
 
 from api.serializers import RecipeShortSerializer
-
 from .models import Follow
 
 

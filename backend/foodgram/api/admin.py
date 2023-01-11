@@ -1,29 +1,29 @@
 from django.contrib import admin
 
 from .models import (
-    Favourite, Ingridient,
-    RecipeIngridient, Recipe,
+    Favourite, Ingredient,
+    RecipeIngredient, Recipe,
     ShoppingCart
 )
 
 
-class RecipeIngridientInline(admin.TabularInline):
-    model = Recipe.ingridients.through
+class RecipeIngredientInline(admin.TabularInline):
+    model = Recipe.ingredients.through
     extra = 1
 
 
-@admin.register(RecipeIngridient)
-class RecipeIngridientAdmin(admin.ModelAdmin):
+@admin.register(RecipeIngredient)
+class RecipeIngredientAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
-        'ingridient',
+        'ingredient',
         'recipe',
         'amount'
     )
-    search_fields = ('recipe__name', 'ingridient__name')
+    search_fields = ('recipe__name', 'ingredient__name')
 
 
-@admin.register(Ingridient)
+@admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
@@ -36,7 +36,7 @@ class IngredientAdmin(admin.ModelAdmin):
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
-    inlines = (RecipeIngridientInline,)
+    inlines = (RecipeIngredientInline,)
     list_display = (
         'pk',
         'name',

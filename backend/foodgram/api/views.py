@@ -8,8 +8,8 @@ from rest_framework.permissions import (
 )
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
 from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 
@@ -17,13 +17,13 @@ from .permissions import IsAuthorOrReadOnly
 from .pagination import CustomPaginatoion
 from .models import (
     Recipe,
-    Ingridient, Tag,
+    Ingredient, Tag,
     Favourite, ShoppingCart,
-    RecipeIngridient
+    RecipeIngredient
 )
 from .serializers import (
     RecipeWriteSerializer,
-    IngridientViewSerializer,
+    IngredientViewSerializer,
     TagSerializer, RecipeShortSerializer,
     RecipeReadSerializer
 )
@@ -94,25 +94,24 @@ class RecipeViewCreate(viewsets.ModelViewSet):
         if not user.shopping_cart.exists():
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        ingridients = RecipeIngridient.objects.filter(
+        ingredients = RecipeIngredient.objects.filter(
             recipe__shopping_cart__user=request.user
         ).values(
-            'ingridient__name',
-            'ingridient__measurement_unit',
-            'amount'
-        )
-        print(ingridients)
+            'ingredient__name',
+            'ingredient__measurement_unit'
+        ).annotate(total_amount=Sum('amount'))
 
         today = datetime.today()
+
         shopping_list = (
             f'Список покупок для: {user.get_full_name()}\n\n'
             f'Дата: {today:%Y-%m-%d}\n\n'
         )
         shopping_list += '\n'.join([
-            f'- {ingridient["ingridient__name"]} '
-            f'({ingridient["ingridient__measurement_unit"]})'
-            f' - {ingridient["amount"]}'
-            for ingridient in ingridients
+            f'- {ingredient["ingredient__name"]} '
+            f'({ingredient["ingredient__measurement_unit"]})'
+            f' - {ingredient["total_amount"]}'
+            for ingredient in ingredients
         ])
         shopping_list += f'\n\nFoodgram ({today:%Y})'
 
@@ -123,9 +122,9 @@ class RecipeViewCreate(viewsets.ModelViewSet):
         return response
 
 
-class IngridientView(ViewOnlyMixin):
-    queryset = Ingridient.objects.all()
-    serializer_class = IngridientViewSerializer
+class IngredientView(ViewOnlyMixin):
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientViewSerializer
     pagination_class = CustomPaginatoion
     filter_backends = (DjangoFilterBackend,)
     filterset_class = IngredientFilter
