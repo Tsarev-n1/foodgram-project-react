@@ -64,14 +64,14 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
     def validate_ingredients(self, value):
         if not value:
             return ValidationError({
-                'Должен быть минимум 1 ингридиент!'
+                'Должен быть минимум 1 ингредиент!'
             })
         ingredient_list = []
         for item in value:
             ingredient = get_object_or_404(Ingredient, id=item['id'])
             if ingredient in ingredient_list:
                 raise ValidationError({
-                    'ingredients': 'Ингридиенты не должны повторяться!'
+                    'ingredients': 'Ингредиенты не должны повторяться!'
                 })
             if int(item['amount']) <= 0:
                 raise ValidationError({
