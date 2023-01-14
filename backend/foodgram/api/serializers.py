@@ -1,11 +1,11 @@
+from django.db.models import F
+from django.shortcuts import get_object_or_404
+from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from drf_extra_fields.fields import Base64ImageField
-from django.shortcuts import get_object_or_404
-from django.db.models import F
-
-from .models import Recipe, Tag, RecipeIngredient, Ingredient
 from users.serializers import UserSerializer
+
+from .models import Ingredient, Recipe, RecipeIngredient, Tag
 
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
