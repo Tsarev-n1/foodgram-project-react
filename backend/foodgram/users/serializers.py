@@ -4,7 +4,6 @@ from rest_framework import serializers, status
 from rest_framework.exceptions import ValidationError
 
 from api.serializers import RecipeShortSerializer
-
 from .models import Follow
 
 User = get_user_model()
