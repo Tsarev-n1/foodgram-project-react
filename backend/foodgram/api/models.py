@@ -44,7 +44,7 @@ class Recipe(models.Model):
 class Tag(models.Model):
 
     name = models.CharField(max_length=50, unique=True)
-    hex_code = models.CharField(
+    color = models.CharField(
         unique=True,
         max_length=50,
         validators=[
