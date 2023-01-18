@@ -140,3 +140,5 @@ DJOSER = {
     },
     'HIDE_USERS': False,
 }
+
+CSRF_TRUSTED_ORIGINS = ['http://tsarev.ddns.net']
