@@ -38,7 +38,7 @@ class Recipe(models.Model):
         ordering = ['-id']
 
     def __str__(self):
-        return self.text
+        return self.name
 
 
 class Tag(models.Model):
@@ -55,6 +55,13 @@ class Tag(models.Model):
     )
     slug = models.SlugField(unique=True)
 
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+        ordering = ['-id']
+
+    def __str__(self):
+        return self.name
 
 class Ingredient(models.Model):
 
@@ -66,6 +73,13 @@ class Ingredient(models.Model):
 
     measurement_unit = models.CharField('Единица измерения', max_length=20)
 
+    class Meta:
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты'
+        ordering = ['-id']
+
+    def __str__(self):
+        return self.name
 
 class RecipeTag(models.Model):
 
