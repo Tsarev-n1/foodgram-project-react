@@ -113,7 +113,6 @@ class RecipeViewCreate(viewsets.ModelViewSet):
 class IngredientView(ViewOnlyMixin):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientViewSerializer
-    #pagination_class = CustomPaginatoion
     filter_backends = (DjangoFilterBackend,)
     filterset_class = IngredientFilter
 
