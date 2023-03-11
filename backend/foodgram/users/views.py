@@ -18,8 +18,10 @@ class UserViewSet(UserMixin):
     serializer_class = UserSerializer
     pagination_class = CustomPaginatoion
 
-    @action(detail=False)
-    @permission_classes([IsAuthenticated])
+    @action(
+        detail=False,
+        permission_classes=[IsAuthenticated]
+    )
     def subscriptions(self, request):
         user = request.user
         subscriptions = Follow.objects.filter(user=user)
