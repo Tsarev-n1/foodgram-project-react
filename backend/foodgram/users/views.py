@@ -24,8 +24,14 @@ class UserViewSet(UserMixin):
     )
     def subscriptions(self, request):
         user = request.user
-        subscriptions = Follow.objects.filter(user=user)
-        return FollowSerializer(subscriptions, many=True).data
+        queryset = User.objects.filter(following__user=user)
+        pages = self.paginate_queryset(queryset)
+        serializer = FollowSerializer(
+            pages,
+            many=True,
+            context={'request': request},)
+        print(serializer.data)
+        return self.get_paginated_response(serializer.data)
 
     @action(
         detail=True,
