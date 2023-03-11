@@ -30,7 +30,6 @@ class UserViewSet(UserMixin):
             pages,
             many=True,
             context={'request': request},)
-        print(serializer.data)
         return self.get_paginated_response(serializer.data)
 
     @action(
