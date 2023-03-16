@@ -1,6 +1,6 @@
-from rest_framework.mixins import CreateModelMixin, ListModelMixin
+from rest_framework.mixins import ListModelMixin
 from rest_framework.viewsets import GenericViewSet
 
 
-class UserMixin(GenericViewSet, ListModelMixin, CreateModelMixin):
+class UserMixin(GenericViewSet, ListModelMixin):
     pass
