@@ -10,7 +10,10 @@ router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='users')
 
 urlpatterns = [
-    path('users/subscriptions/', UserViewSet.as_view({'get': 'subscriptions'})),
+    path(
+        'users/subscriptions/',
+        UserViewSet.as_view({'get': 'subscriptions'})
+    ),
     path('', include('djoser.urls')),
     path('', include(router.urls)),
     path('auth/', include('djoser.urls.authtoken')),
