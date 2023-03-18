@@ -4,8 +4,8 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.pagination import PageNumberPagination
 
+from api.pagination import CustomPaginatoion
 from .mixins import UserMixin
 from .models import Follow
 from .serializers import FollowSerializer, UserSerializer
@@ -16,8 +16,7 @@ User = get_user_model()
 class UserViewSet(UserMixin):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    pagination_class = PageNumberPagination
-    page_size = 6
+    pagination_class = CustomPaginatoion
 
     @action(
         detail=False,

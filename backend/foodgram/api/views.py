@@ -15,6 +15,7 @@ from .filters import IngredientFilter, RecipeFilter
 from .mixins import ViewOnlyMixin
 from .models import (Favourite, Ingredient, Recipe, RecipeIngredient,
                      ShoppingCart, Tag)
+from .pagination import CustomPaginatoion
 from .permissions import IsAuthorOrReadOnly
 from .serializers import (IngredientViewSerializer, RecipeReadSerializer,
                           RecipeShortSerializer, RecipeWriteSerializer,
@@ -24,14 +25,9 @@ from .serializers import (IngredientViewSerializer, RecipeReadSerializer,
 class RecipeViewCreate(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     permission_classes = [IsAuthorOrReadOnly | IsAdminUser]
-    pagination_class = PageNumberPagination
+    pagination_class = CustomPaginatoion
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecipeFilter
-
-    def get_page_size(self):
-        if self.request.query_params.get('is_in_shopping_cart'):
-            return None
-        return 6
 
     def get_serializer_class(self):
         if self.request.method in SAFE_METHODS:
