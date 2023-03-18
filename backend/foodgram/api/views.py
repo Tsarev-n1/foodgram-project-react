@@ -9,7 +9,6 @@ from rest_framework.decorators import action
 from rest_framework.permissions import (SAFE_METHODS, IsAdminUser,
                                         IsAuthenticated)
 from rest_framework.response import Response
-from rest_framework.pagination import PageNumberPagination
 
 from .filters import IngredientFilter, RecipeFilter
 from .mixins import ViewOnlyMixin
