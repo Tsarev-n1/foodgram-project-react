@@ -5,6 +5,7 @@ class CustomPaginatoion(PageNumberPagination):
     page_size = 6
 
     def get_page_size(self, request):
-        if request.query_params.get('is_in_shopping_cart'):
-            return None
+        limit = request.query_params.get('limit')
+        if limit:
+            return limit
         return super().get_page_size(request)
