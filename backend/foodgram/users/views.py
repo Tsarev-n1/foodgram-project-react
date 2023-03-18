@@ -4,16 +4,16 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from djoser.views import UserViewSet as DjoserViewSet
 
 from api.pagination import CustomPaginatoion
-from .mixins import UserMixin
 from .models import Follow
 from .serializers import FollowSerializer, UserSerializer
 
 User = get_user_model()
 
 
-class UserViewSet(UserMixin):
+class UserViewSet(DjoserViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     pagination_class = CustomPaginatoion
