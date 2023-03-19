@@ -7,8 +7,9 @@ from rest_framework.response import Response
 from djoser.views import UserViewSet as DjoserViewSet
 
 from api.pagination import CustomPaginatoion
+from api.serializers import FollowSerializer
 from .models import Follow
-from .serializers import FollowSerializer, UserViewSerializer
+from .serializers import UserViewSerializer
 
 User = get_user_model()
 
