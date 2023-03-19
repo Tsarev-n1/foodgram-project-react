@@ -4,7 +4,6 @@ from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from users.serializers import UserSerializer
 from .models import Ingredient, Recipe, RecipeIngredient, Tag
 
 
@@ -22,7 +21,7 @@ class RecipeWriteSerializer(serializers.ModelSerializer):
         many=True,
         queryset=Tag.objects.all()
     )
-    author = UserSerializer(read_only=True)
+    author = 'UserViewSerializer(read_only=True)'
     image = Base64ImageField()
 
     class Meta:
@@ -119,7 +118,7 @@ class RecipeShortSerializer(serializers.ModelSerializer):
 
 class RecipeReadSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, read_only=True)
-    author = UserSerializer()
+    author = 'UserViewSerializer()'
     ingredients = serializers.SerializerMethodField()
     image = Base64ImageField()
     is_favorited = serializers.SerializerMethodField(read_only=True)

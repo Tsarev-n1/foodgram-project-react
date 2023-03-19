@@ -8,14 +8,14 @@ from djoser.views import UserViewSet as DjoserViewSet
 
 from api.pagination import CustomPaginatoion
 from .models import Follow
-from .serializers import FollowSerializer, UserSerializer
+from .serializers import FollowSerializer, UserViewSerializer
 
 User = get_user_model()
 
 
 class UserViewSet(DjoserViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserViewSerializer
     pagination_class = CustomPaginatoion
 
     @action(

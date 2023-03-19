@@ -15,7 +15,7 @@ class UserCreateSerializer(UserCreateSerializer):
         fields = ('__all__')
 
 
-class UserSerializer(UserSerializer):
+class UserViewSerializer(UserSerializer):
 
     is_subscribed = serializers.SerializerMethodField()
 
@@ -37,12 +37,12 @@ class UserSerializer(UserSerializer):
         return Follow.objects.filter(user=user, author=obj).exists()
 
 
-class FollowSerializer(UserSerializer):
+class FollowSerializer(UserViewSerializer):
     recipes = serializers.SerializerMethodField()
     recipes_count = serializers.SerializerMethodField()
 
-    class Meta(UserSerializer.Meta):
-        fields = UserSerializer.Meta.fields + (
+    class Meta(UserViewSerializer.Meta):
+        fields = UserViewSerializer.Meta.fields + (
             'recipes_count', 'recipes'
         )
         read_only_fields = ('email', 'username', 'first_name', 'last_name',)
