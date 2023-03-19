@@ -17,7 +17,7 @@ class UserCreateSerializer(UserCreateSerializer):
 
 class UserSerializer(UserSerializer):
 
-    is_subscribed = serializers.SerializerMethodField(read_only=True)
+    is_subscribed = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -27,7 +27,7 @@ class UserSerializer(UserSerializer):
             'username',
             'first_name',
             'last_name',
-            'is_subscribed'
+            'is_subscribed',
         )
 
     def get_is_subscribed(self, obj):
