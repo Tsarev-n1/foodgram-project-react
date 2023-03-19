@@ -134,7 +134,6 @@ class RecipeReadSerializer(serializers.ModelSerializer):
             'ingredients',
             'is_favorited',
             'is_in_shopping_cart',
-            'is_subscribed',
             'name',
             'image',
             'text',
