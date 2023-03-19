@@ -27,7 +27,7 @@ class UserSerializer(UserSerializer):
             'username',
             'first_name',
             'last_name',
-            'is_subscribed',
+            'is_subscribed'
         )
 
     def get_is_subscribed(self, obj):
